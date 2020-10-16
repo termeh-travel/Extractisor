@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HtmlAgilityPackTest
+namespace Extractisor
 {
     public class Review
     {

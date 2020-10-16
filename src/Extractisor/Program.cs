@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 
-namespace HtmlAgilityPackTest
+namespace Extractisor
 {
     public class Program
     {
