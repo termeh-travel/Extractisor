@@ -11,6 +11,9 @@ namespace HtmlAgilityPackTest
         public string ReviewTitle { get; set; }
         public string ReviewText { get; set; }
         public int Rating { get; set; }
+        public string SubmissionDate { get; set; }
+        public string DateOfExperience { get; set; }
+        public string Location { get; set; }
 
     }
 }
