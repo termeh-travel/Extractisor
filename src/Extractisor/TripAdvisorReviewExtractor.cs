@@ -24,9 +24,10 @@ namespace Extractisor
         public async Task ExtractAsync(string url)
         {
             // The address of the page you crawled
-            var baseUrl = new Uri(url);
+            var baseUrl = new Uri(new Uri(url)
+                .GetLeftPart(UriPartial.Path));
 
-            var response = await HttpClient.GetStringAsync(baseUrl);
+            var response = await HttpClient.GetStringAsync(url);
 
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(response);
