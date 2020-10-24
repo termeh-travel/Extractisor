@@ -39,7 +39,9 @@ namespace Extractisor
 
             string jsonNode = nodes.Substring(37, nodes.Length - 178);
 
-            Review review = JsonConvert.DeserializeObject<Review>(jsonNode);
+            Reviewlistpage review = JsonConvert.DeserializeObject<Reviewlistpage>(jsonNode);
+            var NumberOfReviews = review.totalCount;
+            
 
 
 
