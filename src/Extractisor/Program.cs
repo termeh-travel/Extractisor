@@ -7,7 +7,7 @@ namespace Extractisor
         static void Main(string[] args)
         {
             var url =
-                @$"https://www.tripadvisor.com/Attraction_Review-g295423-d17837638-Reviews-Termeh_Travel-Isfahan_Isfahan_Province.html";
+                @$"https://www.tripadvisor.com/Attraction_Review-g295423-d17837638-Reviews-or20-Termeh_Travel-Isfahan_Isfahan_Province.html";
 
             TripAdvisorReviewExtractor extractor = new TripAdvisorReviewExtractor();
 

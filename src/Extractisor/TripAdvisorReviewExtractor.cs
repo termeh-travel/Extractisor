@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Extractisor.Models;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 
 namespace Extractisor
 {
@@ -34,81 +35,87 @@ namespace Extractisor
 
             var nodes = htmlDocument
                 .DocumentNode
-                .SelectNodes(".//div[@class='Dq9MAugU T870kzTX LnVzGwUB']");
+                .SelectSingleNode("//*[@id='BODY_BLOCK_JQUERY_REFLOW']/script[4]/text()").InnerText;
 
-            foreach (var node in nodes)
-            {
-                var review = new Review();
+            string jsonNode = nodes.Substring(37, nodes.Length - 178);
 
-                review.ReviewerFullName = node
-                    .SelectSingleNode(".//a[@class='ui_header_link _1r_My98y']")
-                    .InnerText;
+            Review review = JsonConvert.DeserializeObject<Review>(jsonNode);
 
-                var reviewTitleNode = node
-                    .SelectSingleNode(".//a[@class='ocfR3SKN']");
 
-                var reviewRelativeLink = reviewTitleNode.GetAttributeValue("href", null);
-                var reviewLink = new Uri(baseUrl, reviewRelativeLink);
 
-                review.Title = reviewTitleNode.InnerText;
-                review.Link = reviewLink.AbsoluteUri;
+            //foreach (var node in nodes)
+            //{
+            //    var review = new Review();
 
-                var contents = node
-                    .SelectNodes(".//q[@class='IRsGHoPm']/span");
+            //    review.ReviewerFullName = node
+            //        .SelectSingleNode(".//a[@class='ui_header_link _1r_My98y']")
+            //        .InnerText;
 
-                if (contents.Count == 1)
-                {
-                    review.Content = contents.First().InnerText;
-                }
-                else
-                {
-                    review.Content = contents
-                        .Take(2)
-                        .Select(n => n.InnerText)
-                        .JoinAsString("");
-                }
+            //    var reviewTitleNode = node
+            //        .SelectSingleNode(".//a[@class='ocfR3SKN']");
 
-                // review.ReviewerProfileUrl = node
-                //     .SelectSingleNode(".//*[contains(@class,'_310S4sqz')]")
-                //     .GetAttributeValue("src", "Cant Get Image URL");
+            //    var reviewRelativeLink = reviewTitleNode.GetAttributeValue("href", null);
+            //    var reviewLink = new Uri(baseUrl, reviewRelativeLink);
 
-                review.Rating = node
-                    .SelectSingleNode(".//span[contains(@class,'ui_bubble_rating')]")
-                    .GetClasses()
-                    .ElementAt(1)
-                    .GetLast(2)
-                    .ToInt() / 10;
+            //    review.Title = reviewTitleNode.InnerText;
+            //    review.Link = reviewLink.AbsoluteUri;
 
-                var locations = node
-                    .SelectSingleNode(".//span[@class = 'default _3J15flPT small' ]")
-                    .InnerText
-                    .Split(", ");
+            //    var contents = node
+            //        .SelectNodes(".//q[@class='IRsGHoPm']/span");
 
-                if (locations.Length == 2)
-                {
-                    review.ReviewerCity = locations[0];
-                    review.ReviewerCountry = locations[1];
-                }
-                else
-                {
-                    review.ReviewerCountry = locations[0];
-                }
+            //    if (contents.Count == 1)
+            //    {
+            //        review.Content = contents.First().InnerText;
+            //    }
+            //    else
+            //    {
+            //        review.Content = contents
+            //            .Take(2)
+            //            .Select(n => n.InnerText)
+            //            .JoinAsString("");
+            //    }
 
-                review.SubmissionDate = node
-                    .SelectSingleNode(".//div[@class='_2fxQ4TOx']")
-                    .InnerText
-                    .Split(' ')
-                    .TakeLast(2)
-                    .JoinAsString()
-                    .ToDateTime();
+            //    // review.ReviewerProfileUrl = node
+            //    //     .SelectSingleNode(".//*[contains(@class,'_310S4sqz')]")
+            //    //     .GetAttributeValue("src", "Cant Get Image URL");
 
-                
-                review.DateOfExperience = node
-                    .SelectSingleNode(".//span[@class='_34Xs-BQm']")
-                    .LastChild
-                    .InnerText
-                    .ToDateTime();
-            }
+            //    review.Rating = node
+            //        .SelectSingleNode(".//span[contains(@class,'ui_bubble_rating')]")
+            //        .GetClasses()
+            //        .ElementAt(1)
+            //        .GetLast(2)
+            //        .ToInt() / 10;
+
+            //    var locations = node
+            //        .SelectSingleNode(".//span[@class = 'default _3J15flPT small' ]")
+            //        .InnerText
+            //        .Split(", ");
+
+            //    if (locations.Length == 2)
+            //    {
+            //        review.ReviewerCity = locations[0];
+            //        review.ReviewerCountry = locations[1];
+            //    }
+            //    else
+            //    {
+            //        review.ReviewerCountry = locations[0];
+            //    }
+
+            //    review.SubmissionDate = node
+            //        .SelectSingleNode(".//div[@class='_2fxQ4TOx']")
+            //        .InnerText
+            //        .Split(' ')
+            //        .TakeLast(2)
+            //        .JoinAsString()
+            //        .ToDateTime();
+
+
+            //    review.DateOfExperience = node
+            //        .SelectSingleNode(".//span[@class='_34Xs-BQm']")
+            //        .LastChild
+            //        .InnerText
+            //        .ToDateTime();
+            //}
         }
     }
 }
