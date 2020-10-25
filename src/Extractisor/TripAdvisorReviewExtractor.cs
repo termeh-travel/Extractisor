@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Extractisor.Models;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Extractisor
 {
@@ -22,7 +23,7 @@ namespace Extractisor
         /// Extract all the reviews of a given page
         /// </summary>
         /// <param name="url">the page url</param>
-        public async Task ExtractAsync(string url)
+        public async Task<ICollection<Review>> ExtractAsync(string url)
         {
             // The address of the page you crawled
             var baseUrl = new Uri(new Uri(url)
@@ -39,11 +40,23 @@ namespace Extractisor
 
             string jsonNode = nodes.Substring(37, nodes.Length - 178);
 
-            Reviewlistpage review = JsonConvert.DeserializeObject<Reviewlistpage>(jsonNode);
-            var NumberOfReviews = review.totalCount;
+            JObject jsonObject = JObject.Parse(jsonNode);
+
+            var urqlCacheFirstNumberNode = jsonObject["urqlCache"]
+                .First
+                .ToObject<JProperty>()
+                .Value;
+
             
+            var result = urqlCacheFirstNumberNode.ToObject<TripAdvisorPageResult>();
 
+            var reviews = result.Data
+                .Locations
+                .First()
+                .ReviewListPage
+                .Reviews;
 
+            return reviews;
 
             //foreach (var node in nodes)
             //{
