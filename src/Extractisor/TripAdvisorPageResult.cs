@@ -1,408 +1,408 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Extractisor
 {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class AdditionalNames
     {
-        [JsonProperty("normal")]
+        [JsonPropertyName("normal")]
         public string Normal { get; set; }
 
-        [JsonProperty("long")]
+        [JsonPropertyName("long")]
         public string Long { get; set; }
 
-        [JsonProperty("longOnlyParent")]
+        [JsonPropertyName("longOnlyParent")]
         public string LongOnlyParent { get; set; }
 
-        [JsonProperty("longParentAbbreviated")]
+        [JsonPropertyName("longParentAbbreviated")]
         public string LongParentAbbreviated { get; set; }
 
-        [JsonProperty("longOnlyParentAbbreviated")]
+        [JsonPropertyName("longOnlyParentAbbreviated")]
         public string LongOnlyParentAbbreviated { get; set; }
 
-        [JsonProperty("longParentStateAbbreviated")]
+        [JsonPropertyName("longParentStateAbbreviated")]
         public string LongParentStateAbbreviated { get; set; }
 
-        [JsonProperty("longOnlyParentStateAbbreviated")]
+        [JsonPropertyName("longOnlyParentStateAbbreviated")]
         public string LongOnlyParentStateAbbreviated { get; set; }
 
-        [JsonProperty("geo")]
+        [JsonPropertyName("geo")]
         public string Geo { get; set; }
 
-        [JsonProperty("abbreviated")]
+        [JsonPropertyName("abbreviated")]
         public string Abbreviated { get; set; }
 
-        [JsonProperty("abbreviatedRaw")]
+        [JsonPropertyName("abbreviatedRaw")]
         public string AbbreviatedRaw { get; set; }
 
-        [JsonProperty("abbreviatedStateTerritory")]
+        [JsonPropertyName("abbreviatedStateTerritory")]
         public string AbbreviatedStateTerritory { get; set; }
 
-        [JsonProperty("abbreviatedStateTerritoryRaw")]
+        [JsonPropertyName("abbreviatedStateTerritoryRaw")]
         public string AbbreviatedStateTerritoryRaw { get; set; }
     }
 
     public class AdditionalNames2
     {
-        [JsonProperty("normal")]
+        [JsonPropertyName("normal")]
         public string Normal { get; set; }
 
-        [JsonProperty("long")]
+        [JsonPropertyName("long")]
         public string Long { get; set; }
 
-        [JsonProperty("longOnlyParent")]
+        [JsonPropertyName("longOnlyParent")]
         public string LongOnlyParent { get; set; }
 
-        [JsonProperty("longParentAbbreviated")]
+        [JsonPropertyName("longParentAbbreviated")]
         public string LongParentAbbreviated { get; set; }
 
-        [JsonProperty("longOnlyParentAbbreviated")]
+        [JsonPropertyName("longOnlyParentAbbreviated")]
         public string LongOnlyParentAbbreviated { get; set; }
 
-        [JsonProperty("longParentStateAbbreviated")]
+        [JsonPropertyName("longParentStateAbbreviated")]
         public string LongParentStateAbbreviated { get; set; }
 
-        [JsonProperty("longOnlyParentStateAbbreviated")]
+        [JsonPropertyName("longOnlyParentStateAbbreviated")]
         public string LongOnlyParentStateAbbreviated { get; set; }
 
-        [JsonProperty("geo")]
+        [JsonPropertyName("geo")]
         public string Geo { get; set; }
 
-        [JsonProperty("abbreviated")]
+        [JsonPropertyName("abbreviated")]
         public string Abbreviated { get; set; }
 
-        [JsonProperty("abbreviatedRaw")]
+        [JsonPropertyName("abbreviatedRaw")]
         public string AbbreviatedRaw { get; set; }
 
-        [JsonProperty("abbreviatedStateTerritory")]
+        [JsonPropertyName("abbreviatedStateTerritory")]
         public string AbbreviatedStateTerritory { get; set; }
 
-        [JsonProperty("abbreviatedStateTerritoryRaw")]
+        [JsonPropertyName("abbreviatedStateTerritoryRaw")]
         public string AbbreviatedStateTerritoryRaw { get; set; }
     }
 
     public class Parent
     {
-        [JsonProperty("locationId")]
+        [JsonPropertyName("locationId")]
         public int LocationId { get; set; }
 
-        [JsonProperty("additionalNames")]
+        [JsonPropertyName("additionalNames")]
         public AdditionalNames2 AdditionalNames { get; set; }
     }
 
     public class Location
     {
-        [JsonProperty("locationId")]
+        [JsonPropertyName("locationId")]
         public int LocationId { get; set; }
 
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
 
-        [JsonProperty("placeType")]
+        [JsonPropertyName("placeType")]
         public string PlaceType { get; set; }
 
-        [JsonProperty("parentGeoId")]
+        [JsonPropertyName("parentGeoId")]
         public int ParentGeoId { get; set; }
 
-        [JsonProperty("__typename")]
+        [JsonPropertyName("__typename")]
         public string Typename { get; set; }
 
-        [JsonProperty("additionalNames")]
+        [JsonPropertyName("additionalNames")]
         public AdditionalNames AdditionalNames { get; set; }
 
-        [JsonProperty("parent")]
+        [JsonPropertyName("parent")]
         public Parent Parent { get; set; }
     }
 
     public class Provider
     {
-        [JsonProperty("isLocalProvider")]
+        [JsonPropertyName("isLocalProvider")]
         public bool IsLocalProvider { get; set; }
 
-        [JsonProperty("isToolsProvider")]
+        [JsonPropertyName("isToolsProvider")]
         public bool IsToolsProvider { get; set; }
     }
 
     public class PhotoSize
     {
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
 
-        [JsonProperty("width")]
+        [JsonPropertyName("width")]
         public int Width { get; set; }
 
-        [JsonProperty("height")]
+        [JsonPropertyName("height")]
         public int Height { get; set; }
     }
 
     public class Avatar
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("photoSizes")]
+        [JsonPropertyName("photoSizes")]
         public List<PhotoSize> PhotoSizes { get; set; }
     }
 
     public class AdditionalNames3
     {
-        [JsonProperty("long")]
+        [JsonPropertyName("long")]
         public string Long { get; set; }
     }
 
     public class Location2
     {
-        [JsonProperty("locationId")]
+        [JsonPropertyName("locationId")]
         public int LocationId { get; set; }
 
-        [JsonProperty("additionalNames")]
+        [JsonPropertyName("additionalNames")]
         public AdditionalNames3 AdditionalNames { get; set; }
 
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
     }
 
     public class Hometown
     {
-        [JsonProperty("locationId")]
+        [JsonPropertyName("locationId")]
         public int? LocationId { get; set; }
 
-        [JsonProperty("fallbackString")]
+        [JsonPropertyName("fallbackString")]
         public string FallbackString { get; set; }
 
-        [JsonProperty("location")]
+        [JsonPropertyName("location")]
         public Location2 Location { get; set; }
     }
 
     public class ContributionCounts
     {
-        [JsonProperty("sumAllUgc")]
+        [JsonPropertyName("sumAllUgc")]
         public int SumAllUgc { get; set; }
 
-        [JsonProperty("helpfulVote")]
+        [JsonPropertyName("helpfulVote")]
         public int HelpfulVote { get; set; }
     }
 
     public class Route
     {
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
     }
 
     public class UserProfile
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        [JsonProperty("userId")]
+        [JsonPropertyName("userId")]
         public string UserId { get; set; }
 
-        [JsonProperty("isMe")]
+        [JsonPropertyName("isMe")]
         public bool IsMe { get; set; }
 
-        [JsonProperty("isVerified")]
+        [JsonPropertyName("isVerified")]
         public bool IsVerified { get; set; }
 
-        [JsonProperty("displayName")]
+        [JsonPropertyName("displayName")]
         public string DisplayName { get; set; }
 
-        [JsonProperty("username")]
+        [JsonPropertyName("username")]
         public string Username { get; set; }
 
-        [JsonProperty("avatar")]
+        [JsonPropertyName("avatar")]
         public Avatar Avatar { get; set; }
 
-        [JsonProperty("hometown")]
+        [JsonPropertyName("hometown")]
         public Hometown Hometown { get; set; }
 
-        [JsonProperty("contributionCounts")]
+        [JsonPropertyName("contributionCounts")]
         public ContributionCounts ContributionCounts { get; set; }
 
-        [JsonProperty("route")]
+        [JsonPropertyName("route")]
         public Route Route { get; set; }
 
-        [JsonProperty("isFollowing")]
+        [JsonPropertyName("isFollowing")]
         public bool IsFollowing { get; set; }
     }
 
     public class TripInfo
     {
-        [JsonProperty("stayDate")]
+        [JsonPropertyName("stayDate")]
         public string StayDate { get; set; }
 
-        [JsonProperty("tripType")]
+        [JsonPropertyName("tripType")]
         public string TripType { get; set; }
     }
 
     public class Route2
     {
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
     }
 
     public class SocialStatistics
     {
-        [JsonProperty("followCount")]
+        [JsonPropertyName("followCount")]
         public int FollowCount { get; set; }
 
-        [JsonProperty("isFollowing")]
+        [JsonPropertyName("isFollowing")]
         public bool IsFollowing { get; set; }
 
-        [JsonProperty("isLiked")]
+        [JsonPropertyName("isLiked")]
         public bool IsLiked { get; set; }
 
-        [JsonProperty("isReposted")]
+        [JsonPropertyName("isReposted")]
         public bool IsReposted { get; set; }
 
-        [JsonProperty("isSaved")]
+        [JsonPropertyName("isSaved")]
         public bool IsSaved { get; set; }
 
-        [JsonProperty("likeCount")]
+        [JsonPropertyName("likeCount")]
         public int LikeCount { get; set; }
 
-        [JsonProperty("repostCount")]
+        [JsonPropertyName("repostCount")]
         public int RepostCount { get; set; }
 
-        [JsonProperty("tripCount")]
+        [JsonPropertyName("tripCount")]
         public int TripCount { get; set; }
     }
 
     public class Review
     {
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
 
-        [JsonProperty("location")]
+        [JsonPropertyName("location")]
         public Location Location { get; set; }
 
-        [JsonProperty("createdDate")]
+        [JsonPropertyName("createdDate")]
         public string CreatedDate { get; set; }
 
-        [JsonProperty("publishedDate")]
+        [JsonPropertyName("publishedDate")]
         public string PublishedDate { get; set; }
 
-        [JsonProperty("provider")]
+        [JsonPropertyName("provider")]
         public Provider Provider { get; set; }
 
-        [JsonProperty("userProfile")]
+        [JsonPropertyName("userProfile")]
         public UserProfile UserProfile { get; set; }
 
-        [JsonProperty("title")]
+        [JsonPropertyName("title")]
         public string Title { get; set; }
 
-        [JsonProperty("language")]
+        [JsonPropertyName("language")]
         public string Language { get; set; }
 
-        [JsonProperty("translationType")]
+        [JsonPropertyName("translationType")]
         public object TranslationType { get; set; }
 
-        [JsonProperty("roomTip")]
+        [JsonPropertyName("roomTip")]
         public object RoomTip { get; set; }
 
-        [JsonProperty("tripInfo")]
+        [JsonPropertyName("tripInfo")]
         public TripInfo TripInfo { get; set; }
 
-        [JsonProperty("additionalRatings")]
+        [JsonPropertyName("additionalRatings")]
         public List<object> AdditionalRatings { get; set; }
 
-        [JsonProperty("mgmtResponse")]
+        [JsonPropertyName("mgmtResponse")]
         public object MgmtResponse { get; set; }
 
-        [JsonProperty("text")]
+        [JsonPropertyName("text")]
         public string Text { get; set; }
 
-        [JsonProperty("username")]
+        [JsonPropertyName("username")]
         public string Username { get; set; }
 
-        [JsonProperty("connectionToSubject")]
+        [JsonPropertyName("connectionToSubject")]
         public object ConnectionToSubject { get; set; }
 
-        [JsonProperty("locationId")]
+        [JsonPropertyName("locationId")]
         public int LocationId { get; set; }
 
-        [JsonProperty("rating")]
+        [JsonPropertyName("rating")]
         public int Rating { get; set; }
 
-        [JsonProperty("absoluteUrl")]
+        [JsonPropertyName("absoluteUrl")]
         public string AbsoluteUrl { get; set; }
 
-        [JsonProperty("mcid")]
+        [JsonPropertyName("mcid")]
         public int Mcid { get; set; }
 
-        [JsonProperty("mtProviderId")]
+        [JsonPropertyName("mtProviderId")]
         public int MtProviderId { get; set; }
 
-        [JsonProperty("photos")]
+        [JsonPropertyName("photos")]
         public List<object> Photos { get; set; }
 
-        [JsonProperty("original")]
+        [JsonPropertyName("original")]
         public object Original { get; set; }
 
-        [JsonProperty("attribution")]
+        [JsonPropertyName("attribution")]
         public object Attribution { get; set; }
 
-        [JsonProperty("__typename")]
+        [JsonPropertyName("__typename")]
         public string Typename { get; set; }
 
-        [JsonProperty("helpfulVotes")]
+        [JsonPropertyName("helpfulVotes")]
         public int HelpfulVotes { get; set; }
 
-        [JsonProperty("photoIds")]
+        [JsonPropertyName("photoIds")]
         public List<object> PhotoIds { get; set; }
 
-        [JsonProperty("route")]
+        [JsonPropertyName("route")]
         public Route2 Route { get; set; }
 
-        [JsonProperty("socialStatistics")]
+        [JsonPropertyName("socialStatistics")]
         public SocialStatistics SocialStatistics { get; set; }
 
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
-        [JsonProperty("userId")]
+        [JsonPropertyName("userId")]
         public string UserId { get; set; }
 
-        [JsonProperty("originalLanguage")]
+        [JsonPropertyName("originalLanguage")]
         public string OriginalLanguage { get; set; }
 
-        [JsonProperty("labels")]
+        [JsonPropertyName("labels")]
         public List<object> Labels { get; set; }
 
-        [JsonProperty("alertStatus")]
+        [JsonPropertyName("alertStatus")]
         public bool AlertStatus { get; set; }
     }
 
     public class ReviewListPage
     {
-        [JsonProperty("totalCount")]
+        [JsonPropertyName("totalCount")]
         public int TotalCount { get; set; }
 
-        [JsonProperty("reviews")]
+        [JsonPropertyName("reviews")]
         public List<Review> Reviews { get; set; }
     }
 
     public class TripAdvisorPageResult
     {
-        [JsonProperty("data")]
+        [JsonPropertyName("data")]
         public Data Data { get; set; }
     }
 
     public class Data
     {
-        [JsonProperty("locations")]
+        [JsonPropertyName("locations")]
         public List<DataLocation> Locations { get; set; }
     }
 
     public class DataLocation
     {
-        [JsonProperty("reviewListPage")]
+        [JsonPropertyName("reviewListPage")]
         public ReviewListPage ReviewListPage { get; set; }
     }
 }

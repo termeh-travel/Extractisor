@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Extractisor.Models;
 using HtmlAgilityPack;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+
 
 namespace Extractisor
 {
@@ -38,99 +37,27 @@ namespace Extractisor
                 .DocumentNode
                 .SelectSingleNode("//*[@id='BODY_BLOCK_JQUERY_REFLOW']/script[4]/text()").InnerText;
 
-            string jsonNode = nodes.Substring(37, nodes.Length - 178);
+            string jsonString = nodes.Substring(37, nodes.Length - 178);
 
-            JObject jsonObject = JObject.Parse(jsonNode);
+            using (JsonDocument document = JsonDocument.Parse(jsonString))
+            {
+                var reviewListPageElement = document
+                    .RootElement
+                    .GetProperty("urqlCache")
+                    .EnumerateObject()
+                    .Select(jsonProperty => jsonProperty.Value.GetProperty("data"))
+                    .Where(element => element.EnumerateObject().Any(p => p.NameEquals("locations")))
+                    .Select(element => element.GetProperty("locations"))
+                    .Select(element => element.EnumerateArray().First())
+                    .Where(element => element.ValueKind == JsonValueKind.Object)
+                    .Single(element => element.EnumerateObject().Any(p => p.NameEquals("reviewListPage")))
+                    .GetProperty("reviewListPage");
 
-            var urqlCacheFirstNumberNode = jsonObject["urqlCache"]
-                .First
-                .ToObject<JProperty>()
-                .Value;
+                var json = reviewListPageElement.GetRawText();
+                var result = JsonSerializer.Deserialize<ReviewListPage>(json);
 
-            
-            var result = urqlCacheFirstNumberNode.ToObject<TripAdvisorPageResult>();
-
-            var reviews = result.Data
-                .Locations
-                .First()
-                .ReviewListPage
-                .Reviews;
-
-            return reviews;
-
-            //foreach (var node in nodes)
-            //{
-            //    var review = new Review();
-
-            //    review.ReviewerFullName = node
-            //        .SelectSingleNode(".//a[@class='ui_header_link _1r_My98y']")
-            //        .InnerText;
-
-            //    var reviewTitleNode = node
-            //        .SelectSingleNode(".//a[@class='ocfR3SKN']");
-
-            //    var reviewRelativeLink = reviewTitleNode.GetAttributeValue("href", null);
-            //    var reviewLink = new Uri(baseUrl, reviewRelativeLink);
-
-            //    review.Title = reviewTitleNode.InnerText;
-            //    review.Link = reviewLink.AbsoluteUri;
-
-            //    var contents = node
-            //        .SelectNodes(".//q[@class='IRsGHoPm']/span");
-
-            //    if (contents.Count == 1)
-            //    {
-            //        review.Content = contents.First().InnerText;
-            //    }
-            //    else
-            //    {
-            //        review.Content = contents
-            //            .Take(2)
-            //            .Select(n => n.InnerText)
-            //            .JoinAsString("");
-            //    }
-
-            //    // review.ReviewerProfileUrl = node
-            //    //     .SelectSingleNode(".//*[contains(@class,'_310S4sqz')]")
-            //    //     .GetAttributeValue("src", "Cant Get Image URL");
-
-            //    review.Rating = node
-            //        .SelectSingleNode(".//span[contains(@class,'ui_bubble_rating')]")
-            //        .GetClasses()
-            //        .ElementAt(1)
-            //        .GetLast(2)
-            //        .ToInt() / 10;
-
-            //    var locations = node
-            //        .SelectSingleNode(".//span[@class = 'default _3J15flPT small' ]")
-            //        .InnerText
-            //        .Split(", ");
-
-            //    if (locations.Length == 2)
-            //    {
-            //        review.ReviewerCity = locations[0];
-            //        review.ReviewerCountry = locations[1];
-            //    }
-            //    else
-            //    {
-            //        review.ReviewerCountry = locations[0];
-            //    }
-
-            //    review.SubmissionDate = node
-            //        .SelectSingleNode(".//div[@class='_2fxQ4TOx']")
-            //        .InnerText
-            //        .Split(' ')
-            //        .TakeLast(2)
-            //        .JoinAsString()
-            //        .ToDateTime();
-
-
-            //    review.DateOfExperience = node
-            //        .SelectSingleNode(".//span[@class='_34Xs-BQm']")
-            //        .LastChild
-            //        .InnerText
-            //        .ToDateTime();
-            //}
+                return result.Reviews;
+            }
         }
     }
 }
