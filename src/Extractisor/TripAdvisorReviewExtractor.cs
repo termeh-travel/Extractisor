@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using HtmlAgilityPack;
 
 
 namespace Extractisor
@@ -24,20 +23,13 @@ namespace Extractisor
         /// <param name="url">the page url</param>
         public async Task<ICollection<Review>> ExtractAsync(string url)
         {
-            // The address of the page you crawled
-            var baseUrl = new Uri(new Uri(url)
-                .GetLeftPart(UriPartial.Path));
-
             var response = await HttpClient.GetStringAsync(url);
 
-            HtmlDocument htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(response);
+            var startOfScriptSectionIndex = response.IndexOf("window.__WEB_CONTEXT__={") + 37;
+            var endOfScriptSectionIndex = response.IndexOf("__WEB_CONTEXT__.pageManifest.features);},[]]},[]]);") - 90;
 
-            var nodes = htmlDocument
-                .DocumentNode
-                .SelectSingleNode("//*[@id='BODY_BLOCK_JQUERY_REFLOW']/script[4]/text()").InnerText;
-
-            string jsonString = nodes.Substring(37, nodes.Length - 178);
+            string jsonString = response
+                .Substring(startOfScriptSectionIndex, endOfScriptSectionIndex - startOfScriptSectionIndex);
 
             using (JsonDocument document = JsonDocument.Parse(jsonString))
             {
