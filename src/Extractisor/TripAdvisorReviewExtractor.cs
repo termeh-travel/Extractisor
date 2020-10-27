@@ -36,9 +36,23 @@ namespace Extractisor
             HttpClient = new HttpClient();
         }
 
-        public IAsyncEnumerable<Review> ExtractAsync(string url, int numberOfReviews)
+        public async IAsyncEnumerable<Review> ExtractAsync(string url, int numberOfPages)
         {
-            throw new System.NotImplementedException();
+            url = GetFirstPageUrl(url);
+
+            var reviewsIndex = url.IndexOf("Reviews", StringComparison.OrdinalIgnoreCase) + 7;
+            for (int i = 5; i <= numberOfPages; i += 5)
+            {
+                var pageUrl = url.Insert(reviewsIndex, $"-or{i}-");
+
+                var pageResult = await GetPageResult(pageUrl);
+
+                foreach (var resultReview in pageResult.Reviews)
+                {
+                    yield return resultReview;
+                }
+            }
+
         }
         
         public async IAsyncEnumerable<Review> ExtractAsync(string url)
