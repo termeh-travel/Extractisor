@@ -379,30 +379,12 @@ namespace Extractisor
         public bool AlertStatus { get; set; }
     }
 
-    public class ReviewListPage
+    public class TripAdvisorPageResult
     {
         [JsonPropertyName("totalCount")]
         public int TotalCount { get; set; }
 
         [JsonPropertyName("reviews")]
         public List<Review> Reviews { get; set; }
-    }
-
-    public class TripAdvisorPageResult
-    {
-        [JsonPropertyName("data")]
-        public Data Data { get; set; }
-    }
-
-    public class Data
-    {
-        [JsonPropertyName("locations")]
-        public List<DataLocation> Locations { get; set; }
-    }
-
-    public class DataLocation
-    {
-        [JsonPropertyName("reviewListPage")]
-        public ReviewListPage ReviewListPage { get; set; }
     }
 }
