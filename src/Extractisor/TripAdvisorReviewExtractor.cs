@@ -16,7 +16,7 @@ namespace Extractisor
         /// </summary>
         /// <param name="url">the url of a page in tripadvisor</param>
         /// <returns>The list of extracted reviews</returns>
-        IAsyncEnumerable<Review> ExtractAsync(string url);
+        IAsyncEnumerable<TripAdvisorPageResult> ExtractAsync(string url);
 
         /// <summary>
         /// 
@@ -24,19 +24,16 @@ namespace Extractisor
         /// <param name="url"></param>
         /// <param name="numberOfReviews"></param>
         /// <returns></returns>
-        IAsyncEnumerable<Review> ExtractAsync(string url, int numberOfReviews);
+        IAsyncEnumerable<TripAdvisorPageResult> ExtractAsync(string url, int numberOfReviews);
     } 
     
     public class TripAdvisorReviewExtractor
     {
-        private static readonly HttpClient HttpClient;
+        private static readonly HttpClient HttpClient = new HttpClient();
 
-        static TripAdvisorReviewExtractor()
-        {
-            HttpClient = new HttpClient();
-        }
+        
 
-        public async IAsyncEnumerable<Review> ExtractAsync(string url, int numberOfPages)
+        public async IAsyncEnumerable<TripAdvisorPageResult> ExtractAsync(string url, int numberOfPages)
         {
             url = GetFirstPageUrl(url);
 
@@ -47,15 +44,14 @@ namespace Extractisor
 
                 var pageResult = await GetPageResult(pageUrl);
 
-                foreach (var resultReview in pageResult.Reviews)
-                {
-                    yield return resultReview;
-                }
+                
+                    yield return pageResult;
+                
             }
 
         }
         
-        public async IAsyncEnumerable<Review> ExtractAsync(string url)
+        public async IAsyncEnumerable<TripAdvisorPageResult> ExtractAsync(string url)
         {
             url = GetFirstPageUrl(url);
         
@@ -73,10 +69,9 @@ namespace Extractisor
                 
                 var pageResult = await GetPageResult(pageUrl);
 
-                foreach (var resultReview in pageResult.Reviews)
-                {
-                    yield return resultReview;
-                }
+                
+                    yield return pageResult;
+                
             }
         }
         
