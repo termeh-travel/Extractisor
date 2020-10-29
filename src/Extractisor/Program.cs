@@ -11,19 +11,17 @@ namespace Extractisor
 
 
             var trustPilotService = new TrustpilotReviewExtractiosr();
-            var a = trustPilotService.GetPageResult("https://www.trustpilot.com/review/kfc.co.uk?page=8").Result;
+            var a = trustPilotService.GetPageResult("https://www.trustpilot.com/review/termehtravel.com").Result;
 
-            Console.WriteLine(Math.Ceiling((decimal) 3.1));
-            
-            for (int i = 1; i < 100; i++)
+
+            foreach (var item in a.Review)
             {
-                if (i % 3 == 0 || i % 5 == 0)
-                {
-                    Console.Write(i);
-                }
+                Console.WriteLine(item.ReviewBody);
+                Console.WriteLine();
             }
-
-            Console.ReadKey();
+            Console.WriteLine();
+            
+            
         }
     }
 }

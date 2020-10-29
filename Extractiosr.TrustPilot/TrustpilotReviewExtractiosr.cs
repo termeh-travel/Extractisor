@@ -49,7 +49,6 @@ namespace Extractiosr.TrustPilot
 
                 
                     yield return pageResult;
-                
             }
 
         }
@@ -57,7 +56,6 @@ namespace Extractiosr.TrustPilot
         public async IAsyncEnumerable<TrustPilotPageResult> ExtractAsync(string url, int numberOfPages)
         {
             url = RemoveQueryString(url);
-            var firstPageResult = await GetPageResult(url);
 
             for (int i = 1; i <= numberOfPages; i++)
             {
@@ -82,23 +80,21 @@ namespace Extractiosr.TrustPilot
             var response = await HttpClient.GetStringAsync(url);
 
             var startOfScriptSectionIndex = response.IndexOf("[{\"@context");
-            var endOfScriptSectionIndex = response.IndexOf("}}]") + 3;
+            response = response.Remove(0, startOfScriptSectionIndex);
+            var endOfScriptSectionIndex = response.IndexOf("</script>");
 
-            string jsonString = response
-                .Substring(startOfScriptSectionIndex, endOfScriptSectionIndex - startOfScriptSectionIndex);
+            string jsonString = response[0..endOfScriptSectionIndex];
 
-            using (JsonDocument document = JsonDocument.Parse(jsonString))
-            {
-                var reviewListPageElement = document
-                    .RootElement
-                    .EnumerateArray()
-                    .First();
+            using JsonDocument document = JsonDocument.Parse(jsonString);
+            var reviewListPageElement = document
+                .RootElement
+                .EnumerateArray()
+                .First();
 
-                var json = reviewListPageElement.GetRawText();
-                var result = JsonSerializer.Deserialize<TrustPilotPageResult>(json);
+            var json = reviewListPageElement.GetRawText();
+            var result = JsonSerializer.Deserialize<TrustPilotPageResult>(json);
 
-                return result;
-            }
+            return result;
         }
     }
 }
